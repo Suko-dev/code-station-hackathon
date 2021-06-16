@@ -1,0 +1,3 @@
+class CreateIngredientUseCase {}
+
+export { CreateIngredientUseCase };
