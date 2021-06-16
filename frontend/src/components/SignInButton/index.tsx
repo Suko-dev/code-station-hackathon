@@ -1,12 +1,12 @@
 import { Button, Icon, ButtonProps, Avatar } from '@chakra-ui/react';
-import { FaGoogle } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 import { FiX } from 'react-icons/fi';
 import { signIn, signOut, useSession } from 'next-auth/client';
 
 const styles: ButtonProps = {
   type: 'button',
-  h: '3rem',
-  borderRadius: '1.5rem',
+  h: '3.75rem',
+  borderRadius: '1rem',
   px: '1.5rem',
   fontWeight: 'bold',
   maxW: '25rem',
@@ -33,7 +33,7 @@ export function SignInButton(): JSX.Element {
       {image ? (
         <Avatar name={name} src={image} size="sm" mr="0.75rem" />
       ) : (
-        <Icon as={FaGoogle} h="1rem" w="1rem" mr="0.75rem" />
+        <Icon as={FcGoogle} mr="0.75rem" />
       )}
       {name}
       <Icon color="palette.light" as={FiX} ml="0.75rem" />
@@ -41,11 +41,11 @@ export function SignInButton(): JSX.Element {
   ) : (
     <Button
       {...styles}
-      bg="palette.red"
+      bg="palette.blue"
       onClick={() => signIn('google')}
       data-testid="login-google"
     >
-      <Icon as={FaGoogle} h="1rem" w="1rem" mr="0.75rem" />
+      <Icon as={FcGoogle} h="1rem" w="1rem" mr="0.75rem" />
       Login com Google
     </Button>
   );
