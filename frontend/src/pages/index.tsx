@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import { Flex } from '@chakra-ui/react';
 
-import { LoginLogout } from '../components/LoginLogout';
+import { SignInButton } from '../components/SignInButton';
 
 export default function Home(): JSX.Element {
   return (
@@ -18,7 +18,7 @@ export default function Home(): JSX.Element {
         maxW="80rem"
         marginX="auto"
       >
-        <LoginLogout />
+        <SignInButton />
       </Flex>
     </>
   );
