@@ -1,5 +1,9 @@
 import express from "express";
 
-const app = express();
+import dbServer from "./shared/typeorm";
 
-app.listen(8080, () => console.log(`Servidor rodando na porta 8080`));
+dbServer();
+const app = express();
+app.use(express.json());
+
+export { app };
