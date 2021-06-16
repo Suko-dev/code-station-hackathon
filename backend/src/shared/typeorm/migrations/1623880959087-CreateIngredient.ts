@@ -44,7 +44,7 @@ export class CreateIngredient1623880959087 implements MigrationInterface {
             name: "fkIngrdientUser",
             referencedTableName: "users",
             referencedColumnNames: ["id"],
-            columnNames: ["userId"],
+            columnNames: ["usersId"],
             onDelete: "CASCADE",
             onUpdate: "CASCADE",
           },

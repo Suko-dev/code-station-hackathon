@@ -40,7 +40,7 @@ export class CreateProduct1623881345940 implements MigrationInterface {
             name: "fkProductUser",
             referencedTableName: "users",
             referencedColumnNames: ["id"],
-            columnNames: ["userId"],
+            columnNames: ["usersId"],
             onDelete: "CASCADE",
             onUpdate: "CASCADE",
           },

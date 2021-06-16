@@ -3,8 +3,8 @@
     "port": 5432,
     "host": "localhost", 
     "username": "docker",
-    "password": "ignite",
-    "database": "rentex", 
+    "password": "hackathon",
+    "database": "cardprice", 
     "migrations": ["./src/shared/typeorm/migrations/*.ts"],
     "entities": ["./src/modules/**/infra/typeorm/entity/*.ts"],
     "cli": {
