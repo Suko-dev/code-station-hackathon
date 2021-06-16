@@ -24,7 +24,12 @@ export function SignInButton(): JSX.Element {
   const image = session?.user?.image;
 
   return session && name && image !== undefined ? (
-    <Button {...styles} bg="palette.blue" onClick={() => signOut()}>
+    <Button
+      {...styles}
+      bg="palette.blue"
+      data-testid="logout-google"
+      onClick={() => signOut()}
+    >
       {image ? (
         <Avatar name={name} src={image} size="sm" mr="0.75rem" />
       ) : (
@@ -34,7 +39,12 @@ export function SignInButton(): JSX.Element {
       <Icon color="palette.light" as={FiX} ml="0.75rem" />
     </Button>
   ) : (
-    <Button {...styles} bg="palette.red" onClick={() => signIn('google')}>
+    <Button
+      {...styles}
+      bg="palette.red"
+      onClick={() => signIn('google')}
+      data-testid="login-google"
+    >
       <Icon as={FaGoogle} h="1rem" w="1rem" mr="0.75rem" />
       Login com Google
     </Button>
