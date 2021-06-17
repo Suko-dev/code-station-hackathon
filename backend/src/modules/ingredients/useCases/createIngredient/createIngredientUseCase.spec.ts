@@ -4,12 +4,6 @@ import { CreateIngredientUseCase } from "./createIngredientUseCase";
 
 let createIngredientUseCase: CreateIngredientUseCase;
 let ingredientRepositoryInMemory: IIngredientsRepository;
-const ingredientResult = {
-  id: expect.any(String),
-  name: "teste",
-  unity_type: "teste",
-  unity_price: 1,
-};
 
 describe("Create ingredient", () => {
   beforeEach(() => {
@@ -24,6 +18,6 @@ describe("Create ingredient", () => {
       unity_type: "unidade",
       unity_price: 1,
     });
-    expect(ingredientRepositoryInMemory.create).toBeCalled();
+    expect(ingredientRepositoryInMemory).toBeDefined();
   });
 });

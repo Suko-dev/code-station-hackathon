@@ -1,19 +1,19 @@
 import { inject, injectable } from "tsyringe";
 
-import { ICreateIngredientDTO } from "../../dto/ICreateIngredientDTO";
+import { IUpdateIngredientDTO } from "../../dto/IUpdateIngredientDTO";
 import { IIngredientsRepository } from "../../infra/IIngredientsRepository";
 
 @injectable()
-class CreateIngredientUseCase {
+class UpdateIngredientUseCase {
   constructor(
     @inject("IngredientsRepository")
     private ingredientRepository: IIngredientsRepository
   ) {}
   async execute(
     userId: string,
-    { name, unity_price, unity_type }: ICreateIngredientDTO
+    { name, unity_price, unity_type }: IUpdateIngredientDTO
   ): Promise<void> {
-    await this.ingredientRepository.create(userId, {
+    await this.ingredientRepository.update(userId, {
       name,
       unity_type,
       unity_price,
@@ -21,4 +21,4 @@ class CreateIngredientUseCase {
   }
 }
 
-export { CreateIngredientUseCase };
+export { UpdateIngredientUseCase };
