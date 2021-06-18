@@ -5,15 +5,15 @@ import { CreateIngredientUseCase } from "./createIngredientUseCase";
 
 class CreateIngredientController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, unity_type, unity_price } = request.body;
-    const userId = "";
+    const { name, unit_type, unit_price } = request.body;
+    const { id } = request.user;
     const createIngredientUseCase = container.resolve(CreateIngredientUseCase);
-    await createIngredientUseCase.execute(userId, {
+    const ingredient = await createIngredientUseCase.execute(id, {
       name,
-      unity_price,
-      unity_type,
+      unit_price,
+      unit_type,
     });
-    return response.status(201).send();
+    return response.status(201).json(ingredient);
   }
 }
 export { CreateIngredientController };

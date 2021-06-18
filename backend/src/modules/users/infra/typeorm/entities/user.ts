@@ -2,30 +2,30 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
-import { User } from "../../../../users/infra/typeorm/entities/user";
-
-@Entity("ingredients")
-class Ingredient {
+@Entity("users")
+class User {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
   @Column()
-  unit_type: string;
+  password: string;
 
-  @Column({ type: "decimal" })
-  unit_price: number;
+  @Column()
+  email: string;
 
-  @ManyToOne(() => User)
-  user: User;
+  @Column({ nullable: true })
+  image: string;
+
+  @Column({ default: 0.4, type: "decimal" })
+  profit: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -40,4 +40,4 @@ class Ingredient {
   }
 }
 
-export { Ingredient };
+export { User };

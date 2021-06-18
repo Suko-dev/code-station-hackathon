@@ -1,22 +1,28 @@
 import { inject, injectable } from "tsyringe";
 
+import { IUsersRepository } from "../../../users/infra/IUsersRepository";
+import { User } from "../../../users/infra/typeorm/entities/user";
 import { ICreateIngredientDTO } from "../../dto/ICreateIngredientDTO";
 import { IIngredientsRepository } from "../../infra/IIngredientsRepository";
+import { Ingredient } from "../../infra/typeorm/entities/ingredient";
 
 @injectable()
 class CreateIngredientUseCase {
   constructor(
     @inject("IngredientsRepository")
-    private ingredientRepository: IIngredientsRepository
+    private ingredientRepository: IIngredientsRepository,
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository
   ) {}
   async execute(
     userId: string,
-    { name, unity_price, unity_type }: ICreateIngredientDTO
-  ): Promise<void> {
-    await this.ingredientRepository.create(userId, {
+    { name, unit_price, unit_type }: ICreateIngredientDTO
+  ): Promise<Ingredient> {
+    const user = (await this.usersRepository.findById(userId)) as User;
+    return this.ingredientRepository.create(user, {
       name,
-      unity_type,
-      unity_price,
+      unit_type,
+      unit_price,
     });
   }
 }
