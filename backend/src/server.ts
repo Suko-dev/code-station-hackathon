@@ -1,10 +1,11 @@
 import express from "express";
+import "reflect-metadata";
 
 import { router } from "./routes";
 import dbServer from "./shared/typeorm";
 import "./shared/container";
 
-dbServer();
+dbServer("localhost");
 
 const app = express();
 app.use(express.json());

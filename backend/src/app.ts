@@ -1,5 +1,6 @@
 import { app } from "./server";
 
-app.listen(8080, async () => {
-  console.log(`Servidor rodando na porta 8080`);
+const port = process.env.PORT || 8080;
+app.listen(port, async () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
