@@ -24,7 +24,7 @@ class Ingredient {
   @Column({ type: "decimal" })
   unit_price: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.ingredient)
   user: User;
 
   @CreateDateColumn()

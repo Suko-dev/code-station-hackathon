@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IUpdateIngredientDTO } from "../../dto/IUpdateIngredientDTO";
 import { IIngredientsRepository } from "../../infra/IIngredientsRepository";
+import { Ingredient } from "../../infra/typeorm/entities/ingredient";
 
 @injectable()
 class UpdateIngredientUseCase {
@@ -10,13 +11,13 @@ class UpdateIngredientUseCase {
     private ingredientRepository: IIngredientsRepository
   ) {}
   async execute(
-    userId: string,
-    { name, unity_price, unity_type }: IUpdateIngredientDTO
-  ): Promise<void> {
-    await this.ingredientRepository.update(userId, {
+    id: string,
+    { name, unit_price, unit_type }: IUpdateIngredientDTO
+  ): Promise<Ingredient> {
+    return this.ingredientRepository.update(id, {
       name,
-      unity_type,
-      unity_price,
+      unit_price,
+      unit_type,
     });
   }
 }

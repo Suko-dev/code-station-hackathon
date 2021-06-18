@@ -1,7 +1,7 @@
 interface IUpdateIngredientDTO {
   name?: string;
-  unity_type?: string;
-  unity_price?: number;
+  unit_type?: string;
+  unit_price?: number;
 }
 
 export { IUpdateIngredientDTO };

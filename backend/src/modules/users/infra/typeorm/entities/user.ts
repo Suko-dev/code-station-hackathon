@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+
+import { Ingredient } from "../../../../ingredients/infra/typeorm/entities/ingredient";
 
 @Entity("users")
 class User {
@@ -26,6 +29,9 @@ class User {
 
   @Column({ default: 0.4, type: "decimal" })
   profit: number;
+
+  @OneToMany(() => Ingredient, (ingredient) => ingredient.user)
+  ingredient: Ingredient[];
 
   @CreateDateColumn()
   created_at: Date;

@@ -16,7 +16,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   findByEmail(email: string): Promise<User | undefined> {
-    return this.usersRepository.findOne(email);
+    return this.usersRepository.findOne({ email });
   }
 
   async create({ email, password }: ICreateUserDTO): Promise<User> {

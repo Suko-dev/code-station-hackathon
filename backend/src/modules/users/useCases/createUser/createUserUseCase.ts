@@ -4,7 +4,6 @@ import { inject, injectable } from "tsyringe";
 import { ICreateUserDTO } from "../../dto/ICreateUserDTO";
 import { IReturnUserDTO } from "../../dto/IReturnUserDTO";
 import { IUsersRepository } from "../../infra/IUsersRepository";
-import { User } from "../../infra/typeorm/entities/user";
 
 @injectable()
 class CreateUserUseCase {
