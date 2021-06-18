@@ -6,7 +6,7 @@ import { UpdateUserUseCase } from "./updateUserUseCase";
 class UpdateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { name, image, profit } = request.body;
-    const { id } = request.headers;
+    const { id } = request.user;
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
     const user = await updateUserUseCase.execute({
       id: String(id),

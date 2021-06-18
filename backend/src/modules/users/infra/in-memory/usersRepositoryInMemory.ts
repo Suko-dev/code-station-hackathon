@@ -4,6 +4,9 @@ import { IUsersRepository } from "../IUsersRepository";
 import { User } from "../typeorm/entities/user";
 
 class UsersRepositoryInMemory implements IUsersRepository {
+  async findById(id: string): Promise<User | undefined> {
+    return this.repository.find((item) => item.id === id);
+  }
   repository: User[] = [];
 
   async delete(id: string): Promise<void> {
