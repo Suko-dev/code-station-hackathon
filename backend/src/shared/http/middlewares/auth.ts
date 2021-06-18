@@ -23,7 +23,7 @@ export async function Auth(
     if (!user) {
       throw new Error("user not found");
     }
-    request.user.id = String(sub);
+    request.user = { id: String(sub) };
 
     next();
   } catch (error) {

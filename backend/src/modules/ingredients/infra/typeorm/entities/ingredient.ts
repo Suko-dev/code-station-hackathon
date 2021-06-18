@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+
+import { User } from "../../../../users/infra/typeorm/entities/user";
 
 @Entity("ingredients")
 class Ingredient {
@@ -16,10 +19,13 @@ class Ingredient {
   name: string;
 
   @Column()
-  unity_type: string;
+  unit_type: string;
 
   @Column({ type: "decimal" })
   unit_price: number;
+
+  @ManyToOne(() => User)
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;
