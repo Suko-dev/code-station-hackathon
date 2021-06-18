@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { Flex } from '@chakra-ui/react';
 
 import { SignInButton } from '../components/SignInButton';
+import { Logo } from '../components/Logo';
 
 export default function Home(): JSX.Element {
   return (
@@ -18,7 +19,12 @@ export default function Home(): JSX.Element {
         maxW="80rem"
         marginX="auto"
       >
-        <SignInButton />
+        <Flex w="100%" h={['100%', 'auto']} flexDir={['column', 'row']}>
+          <Logo />
+          <Flex mt={['auto', '0']}>
+            <SignInButton />
+          </Flex>
+        </Flex>
       </Flex>
     </>
   );

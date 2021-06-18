@@ -59,6 +59,7 @@ class IngredientsRepository implements IIngredientsRepository {
     return this.ingredientRepository.findOneOrFail({
       where: { id },
     });
+
   }
 }
 
