@@ -12,6 +12,7 @@ const mockRepositoryInMemory: IUsersRepository = {
   findByEmail: jest.fn(),
   findById: jest.fn(),
 };
+
 describe("Create ingredient", () => {
   beforeEach(() => {
     ingredientRepositoryInMemory = new IngredientRepositoryInMemory();

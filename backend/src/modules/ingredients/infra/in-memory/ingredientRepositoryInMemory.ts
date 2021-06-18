@@ -9,7 +9,6 @@ class IngredientRepositoryInMemory implements IIngredientsRepository {
 
   async delete(id: string, userId: string): Promise<void> {
     const index = this.repository.findIndex((item) => item.id === id);
-    console.log(this.repository);
     const user = this.repository.find((item) => item.user.id === userId);
     if (!user) {
       throw new Error("item doesnt belong to you");

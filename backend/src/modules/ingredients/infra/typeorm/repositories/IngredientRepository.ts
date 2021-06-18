@@ -13,7 +13,6 @@ class IngredientsRepository implements IIngredientsRepository {
   }
 
   async delete(id: string, userId: string): Promise<void> {
-    console.log(id);
     const ingredient = await this.ingredientRepository.findOneOrFail({
       where: { id, user: { id: userId } },
     });
