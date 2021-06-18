@@ -17,3 +17,4 @@ ingredientsRoutes.post("/", createIngredientController.handle);
 ingredientsRoutes.patch("/:id", updateIngredientController.handle);
 ingredientsRoutes.get("/", listIngredientController.handle);
 ingredientsRoutes.delete("/:id", deleteIngredientController.handle);
+ingredientsRoutes.patch("/", updateIngredientController.handle);

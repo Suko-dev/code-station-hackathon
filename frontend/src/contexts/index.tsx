@@ -20,7 +20,7 @@ const AppProvider: React.FC = ({ children }) => (
       />
       {children}
     </ChakraProvider>
-    {isDevelopment && <ReactQueryDevtools />}
+    {/* {isDevelopment && <ReactQueryDevtools />} */}
   </QueryClientProvider>
 );
 
