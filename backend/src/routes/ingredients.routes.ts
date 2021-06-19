@@ -13,7 +13,7 @@ const updateIngredientController = new UpdateIngredientController();
 const listIngredientController = new ListIngredientsController();
 const deleteIngredientController = new DeleteIngredientController();
 
-ingredientsRoutes.use(Auth);
+ingredientsRoutes.use(catchAsync(Auth));
 ingredientsRoutes.post("/", catchAsync(createIngredientController.handle));
 ingredientsRoutes.patch("/:id", catchAsync(updateIngredientController.handle));
 ingredientsRoutes.get("/", catchAsync(listIngredientController.handle));

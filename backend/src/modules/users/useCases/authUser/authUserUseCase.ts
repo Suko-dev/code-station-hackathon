@@ -1,6 +1,7 @@
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../shared/errors/AppError";
 import { ICreateUserDTO } from "../../dto/ICreateUserDTO";
 import { IReturnUserDTO } from "../../dto/IReturnUserDTO";
 import { IUsersRepository } from "../../infra/IUsersRepository";
@@ -14,19 +15,18 @@ class AuthUserUseCase {
   async execute({ email, password }: ICreateUserDTO): Promise<IReturnUserDTO> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new Error("email or password incorret");
+      throw new AppError("email or password incorret", 403);
     }
 
     if (user.password !== password) {
-      throw new Error("email or password incorret");
+      throw new AppError("email or password incorret", 403);
     }
 
     const token = sign({}, "a3740377e4ff48fcf933e22e32c57c60", {
       subject: user.id,
       expiresIn: "1d",
     });
-    const returnUser: IReturnUserDTO = { user, token };
-    return returnUser;
+    return { user, token };
   }
 }
 

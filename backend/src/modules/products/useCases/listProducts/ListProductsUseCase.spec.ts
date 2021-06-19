@@ -1,14 +1,14 @@
-// import { ProductRepositoryInMemory } from "../../infra/in-memory/ProductRepositoryInMemory";
+import { ProductRepositoryInMemory } from "../../infra/in-memory/productRepositoryInMemory";
 import { IProductsRepository } from "../../infra/IProductsRepository";
-import { ListProductsUseCase } from "./ListProductsUseCase";
+import { ListProductsUseCase } from "./listProductsUseCase";
 
 let listProductUseCase: ListProductsUseCase;
-let ProductRepositoryInMemory: IProductsRepository;
+let productRepositoryInMemory: IProductsRepository;
 
 describe("List Product", () => {
   beforeEach(() => {
-    // ProductRepositoryInMemory = new ProductRepositoryInMemory();
-    listProductUseCase = new ListProductsUseCase(ProductRepositoryInMemory);
+    productRepositoryInMemory = new ProductRepositoryInMemory();
+    listProductUseCase = new ListProductsUseCase(productRepositoryInMemory);
   });
   it("should be able to list a Product", async () => {
     const product = await listProductUseCase.execute("1");

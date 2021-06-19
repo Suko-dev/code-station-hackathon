@@ -12,11 +12,14 @@ class IngredientsRepository implements IIngredientsRepository {
     this.ingredientRepository = getRepository(Ingredient);
   }
 
-  async delete(id: string, userId: string): Promise<void> {
-    const ingredient = await this.ingredientRepository.findOneOrFail({
+  async verifyOwner(id: string, userId: string): Promise<void> {
+    await this.ingredientRepository.findOneOrFail({
       where: { id, user: { id: userId } },
     });
-    await this.ingredientRepository.delete({ id: ingredient.id });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.ingredientRepository.delete({ id });
   }
 
   async list(id: string): Promise<Ingredient[]> {

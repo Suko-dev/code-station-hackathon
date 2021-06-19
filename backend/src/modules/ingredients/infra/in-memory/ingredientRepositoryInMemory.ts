@@ -6,13 +6,15 @@ import { Ingredient } from "../typeorm/entities/ingredient";
 
 class IngredientRepositoryInMemory implements IIngredientsRepository {
   repository: Ingredient[] = [];
-
-  async delete(id: string, userId: string): Promise<void> {
-    const index = this.repository.findIndex((item) => item.id === id);
-    const user = this.repository.find((item) => item.user.id === userId);
-    if (!user) {
+  async verifyOwner(id: string, userId: string): Promise<void> {
+    const item = this.repository.find((item) => item.id === id);
+    if (item?.user.id !== userId) {
       throw new Error("item doesnt belong to you");
     }
+  }
+
+  async delete(id: string): Promise<void> {
+    const index = this.repository.findIndex((item) => item.id === id);
     this.repository.splice(index, 1);
   }
 
