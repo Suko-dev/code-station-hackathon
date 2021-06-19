@@ -10,6 +10,7 @@ interface IIngredientsRepository {
   list(userId: string): Promise<Ingredient[]>;
   delete(id: string): Promise<void>;
   verifyOwner(id: string, userId: string): Promise<void>;
+
 }
 
 export { IIngredientsRepository };

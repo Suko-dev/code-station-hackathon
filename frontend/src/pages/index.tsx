@@ -1,29 +1,108 @@
 import Head from 'next/head';
+import { useState } from 'react';
 
-import { Flex } from '@chakra-ui/react';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Flex, Button, Stack, Text, Link } from '@chakra-ui/react';
 
-import { SignInButton } from '../components/SignInButton';
+import { api } from '../services/api';
+
+import { Input } from '../components/Form/Input';
 import { Logo } from '../components/Logo';
 
-export default function Home(): JSX.Element {
+type SignInFormData = { email: string; password: string };
+
+const signInFormSchema = yup.object().shape({
+  email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+  password: yup.string().required('Senha obrigatória'),
+});
+
+export default function SignIn(): JSX.Element {
+  const [isLogin, setIsLogin] = useState(true);
+
+  const {
+    register,
+    handleSubmit,
+    formState,
+    formState: { errors },
+  } = useForm<SignInFormData>({
+    resolver: yupResolver(signInFormSchema),
+  });
+
+  const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
+    const { email, password } = values;
+
+    if (isLogin) {
+      try {
+        const { data } = await api.post('/users/login', {
+          email,
+          password,
+        });
+        console.log(data);
+        return;
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    }
+  };
+
   return (
     <>
       <Head>
         <title>Code Station</title>
       </Head>
-      <Flex
-        w="100%"
-        h="100vh"
-        flexDir="column"
-        p="1rem"
-        maxW="80rem"
-        marginX="auto"
-      >
-        <Flex w="100%" h={['100%', 'auto']} flexDir={['column', 'row']}>
+      <Flex w="100vw" h="100vh" align="center" justify="center">
+        <Flex
+          as="form"
+          w="100%"
+          maxWidth="22.5rem"
+          bg="gray.800"
+          p="8"
+          borderRadius={8}
+          flexDir="column"
+          onSubmit={handleSubmit(handleSignIn)}
+        >
           <Logo />
-          <Flex mt={['auto', '0']}>
-            <SignInButton />
-          </Flex>
+          <Text as="h2" color="pink.300" fontWeight="bold" mb="1rem">
+            {isLogin ? 'Login' : 'Crie sua conta'}
+          </Text>
+          <Stack spacing="4">
+            <Input
+              {...register('email')}
+              name="email"
+              label="E-mail"
+              type="email"
+              error={errors.email}
+            />
+            <Input
+              {...register('password')}
+              name="password"
+              label="Senha"
+              type="password"
+              error={errors.password}
+            />
+          </Stack>
+
+          <Button
+            type="submit"
+            mt="6"
+            colorScheme="pink"
+            size="lg"
+            isLoading={formState.isSubmitting}
+          >
+            {isLogin ? 'Entrar' : 'Cadastrar'}
+          </Button>
+          <Link
+            color="pink.500"
+            href="#"
+            mt="1rem"
+            onClick={() => setIsLogin(!isLogin)}
+            w="100px"
+          >
+            {isLogin ? 'Crie sua conta' : 'Faça seu Login'}
+          </Link>
         </Flex>
       </Flex>
     </>

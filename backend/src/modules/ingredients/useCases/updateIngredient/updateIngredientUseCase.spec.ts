@@ -40,6 +40,7 @@ describe("Update ingredient", () => {
       unit_price: 1,
       unit_type: "teste",
     });
+
     const ingredient = await updateIngredientUseCase.execute(
       newIngredient.id,
       "1",

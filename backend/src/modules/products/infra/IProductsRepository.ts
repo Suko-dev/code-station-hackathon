@@ -13,5 +13,6 @@ interface IProductsRepository {
   verifyOwner(id: string, userId: string): Promise<void>;
   findById(id: string): Promise<Product>;
   delete(id: string): Promise<void>;
+
 }
 export { IProductsRepository };

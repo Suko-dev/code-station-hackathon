@@ -10,6 +10,7 @@ class UpdateIngredientController {
     const userid = request.user.id;
     const updateIngredientUseCase = container.resolve(UpdateIngredientUseCase);
     const ingredient = await updateIngredientUseCase.execute(id, userid, {
+
       name,
       unit_price,
       unit_type,

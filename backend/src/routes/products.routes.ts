@@ -3,6 +3,7 @@ import { Router } from "express";
 import { CreateProductController } from "../modules/products/useCases/createProductUseCase/createProductController";
 import { FindProductsController } from "../modules/products/useCases/findProduct/findProductsController";
 import { ListProductsController } from "../modules/products/useCases/listProducts/listProductsController";
+
 import { UpdateProductController } from "../modules/products/useCases/updateProductUseCase/updateProductController";
 import { Auth } from "../shared/http/middlewares/auth";
 import catchAsync from "../shared/utils/catchAsync";
