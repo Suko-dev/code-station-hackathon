@@ -10,6 +10,14 @@ export class ProductsRepository implements IProductsRepository {
   constructor() {
     this.productsRepository = getRepository(Product);
   }
+  list(id: string): Promise<Product[]> {
+    return this.productsRepository.find({
+      where: {
+        user: { id },
+      },
+      relations: ["ingredients"],
+    });
+  }
 
   async update(
     id: string,
@@ -28,7 +36,7 @@ export class ProductsRepository implements IProductsRepository {
     }
     await this.productsRepository.update({ id }, { name });
     return this.productsRepository.findOneOrFail(id, {
-      relations: ["user", "ingredients"],
+      relations: ["ingredients"],
     });
   }
 
