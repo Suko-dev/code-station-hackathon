@@ -5,6 +5,7 @@ import { CreateUserController } from "../modules/users/useCases/createUser/creat
 import { DeleteUserController } from "../modules/users/useCases/deleteUser/deleteUserController";
 import { UpdateUserController } from "../modules/users/useCases/updateUser/updateUserController";
 import { Auth } from "../shared/http/middlewares/auth";
+import catchAsync from "../shared/utils/catchAsync";
 
 export const usersRoutes = Router();
 const createUserController = new CreateUserController();
@@ -12,8 +13,8 @@ const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 const authUserController = new AuthUserController();
 
-usersRoutes.post("/", createUserController.handle);
-usersRoutes.post("/login", authUserController.handle);
+usersRoutes.post("/", catchAsync(createUserController.handle));
+usersRoutes.post("/login", catchAsync(authUserController.handle));
 usersRoutes.use(Auth);
-usersRoutes.patch("/", updateUserController.handle);
-usersRoutes.delete("/", deleteUserController.handle);
+usersRoutes.patch("/", catchAsync(updateUserController.handle));
+usersRoutes.delete("/", catchAsync(deleteUserController.handle));

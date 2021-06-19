@@ -11,6 +11,22 @@ class IngredientsRepository implements IIngredientsRepository {
   constructor() {
     this.ingredientRepository = getRepository(Ingredient);
   }
+
+  async delete(id: string, userId: string): Promise<void> {
+    const ingredient = await this.ingredientRepository.findOneOrFail({
+      where: { id, user: { id: userId } },
+    });
+    await this.ingredientRepository.delete({ id: ingredient.id });
+  }
+
+  async list(id: string): Promise<Ingredient[]> {
+    return this.ingredientRepository.find({
+      where: {
+        user: { id },
+      },
+    });
+  }
+
   async create(
     user: User,
     { name, unit_price, unit_type }: ICreateIngredientDTO
@@ -23,14 +39,27 @@ class IngredientsRepository implements IIngredientsRepository {
     });
     return this.ingredientRepository.save(ingredient);
   }
+
   async findByName(name: string): Promise<Ingredient | undefined> {
-    throw new Error("Method not implemented.");
+    const ingredient = await this.ingredientRepository.findOne({ name });
+    return ingredient;
   }
+
   async update(
-    userId: string,
-    data: IUpdateIngredientDTO
+    id: string,
+    { unit_type, name, unit_price }: IUpdateIngredientDTO
   ): Promise<Ingredient> {
-    throw new Error("Method not implemented.");
+    await this.ingredientRepository.update(
+      { id },
+      {
+        unit_price,
+        unit_type,
+        name,
+      }
+    );
+    return this.ingredientRepository.findOneOrFail({
+      where: { id },
+    });
   }
 }
 

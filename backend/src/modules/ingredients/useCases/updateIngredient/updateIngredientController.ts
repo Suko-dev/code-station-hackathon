@@ -5,15 +5,15 @@ import { UpdateIngredientUseCase } from "./updateIngredientUseCase";
 
 class UpdateIngredientController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, unity_type, unity_price } = request.body;
-    const userId = "";
+    const { name, unit_type, unit_price } = request.body;
+    const { id } = request.params;
     const updateIngredientUseCase = container.resolve(UpdateIngredientUseCase);
-    await updateIngredientUseCase.execute(userId, {
+    const ingredient = await updateIngredientUseCase.execute(id, {
       name,
-      unity_price,
-      unity_type,
+      unit_price,
+      unit_type,
     });
-    return response.status(201).send();
+    return response.status(200).json(ingredient);
   }
 }
 export { UpdateIngredientController };
