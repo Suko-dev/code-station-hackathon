@@ -40,11 +40,16 @@ describe("Update ingredient", () => {
       unit_price: 1,
       unit_type: "teste",
     });
-    const ingredient = await updateIngredientUseCase.execute(newIngredient.id, {
-      name: "novo teste",
-      unit_type: "unidade",
-      unit_price: 2,
-    });
+
+    const ingredient = await updateIngredientUseCase.execute(
+      newIngredient.id,
+      "1",
+      {
+        name: "novo teste",
+        unit_type: "unidade",
+        unit_price: 2,
+      }
+    );
     expect(ingredient).toEqual(ingredientResult);
   });
 });

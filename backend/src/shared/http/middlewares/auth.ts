@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 import { UsersRepository } from "../../../modules/users/infra/typeorm/repositories/usersRepository";
+import { AppError } from "../../errors/AppError";
 
 export async function Auth(
   request: Request,
@@ -11,7 +12,7 @@ export async function Auth(
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new Error("token missing");
+    throw new AppError("token missing", 401);
   }
 
   const [, token] = authHeader.split(" ");
@@ -21,12 +22,12 @@ export async function Auth(
     const usersRepository = new UsersRepository();
     const user = await usersRepository.findById(String(sub));
     if (!user) {
-      throw new Error("user not found");
+      throw new AppError("no user was found with this token");
     }
     request.user = { id: String(sub) };
 
     next();
   } catch (error) {
-    throw new Error(error);
+    throw new AppError("invalid token");
   }
 }
