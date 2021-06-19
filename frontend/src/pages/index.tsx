@@ -6,10 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Flex, Button, Stack, Text, Link } from '@chakra-ui/react';
 
-import { api } from '../services/api';
-
 import { Input } from '../components/Form/Input';
 import { Logo } from '../components/Logo';
+import { useAuth } from '../contexts/AuthContext';
 
 type SignInFormData = { email: string; password: string };
 
@@ -19,6 +18,7 @@ const signInFormSchema = yup.object().shape({
 });
 
 export default function SignIn(): JSX.Element {
+  const { signInUp } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
 
   const {
@@ -34,17 +34,11 @@ export default function SignIn(): JSX.Element {
     const { email, password } = values;
 
     if (isLogin) {
-      try {
-        const { data } = await api.post('/users/login', {
-          email,
-          password,
-        });
-        console.log(data);
-        return;
-      } catch (error) {
-        console.log(error);
-        return;
-      }
+      await signInUp({ email, password });
+    }
+
+    if (!isLogin) {
+      await signInUp({ email, password, signUp: true });
     }
   };
 
