@@ -5,6 +5,7 @@ import { DeleteIngredientController } from "../modules/ingredients/useCases/dele
 import { ListIngredientsController } from "../modules/ingredients/useCases/listIngredients/listIngredientsController";
 import { UpdateIngredientController } from "../modules/ingredients/useCases/updateIngredient/updateIngredientController";
 import { Auth } from "../shared/http/middlewares/auth";
+import catchAsync from "../shared/utils/catchAsync";
 
 export const ingredientsRoutes = Router();
 const createIngredientController = new CreateIngredientController();
@@ -13,8 +14,8 @@ const listIngredientController = new ListIngredientsController();
 const deleteIngredientController = new DeleteIngredientController();
 
 ingredientsRoutes.use(Auth);
-ingredientsRoutes.post("/", createIngredientController.handle);
-ingredientsRoutes.patch("/:id", updateIngredientController.handle);
-ingredientsRoutes.get("/", listIngredientController.handle);
-ingredientsRoutes.delete("/:id", deleteIngredientController.handle);
-ingredientsRoutes.patch("/", updateIngredientController.handle);
+ingredientsRoutes.post("/", catchAsync(createIngredientController.handle));
+ingredientsRoutes.patch("/:id", catchAsync(updateIngredientController.handle));
+ingredientsRoutes.get("/", catchAsync(listIngredientController.handle));
+ingredientsRoutes.delete("/:id", catchAsync(deleteIngredientController.handle));
+ingredientsRoutes.patch("/", catchAsync(updateIngredientController.handle));
