@@ -4,6 +4,7 @@ import { AppError } from "../../../../shared/errors/AppError";
 import { IIngredientsRepository } from "../../../ingredients/infra/IIngredientsRepository";
 import { Ingredient } from "../../../ingredients/infra/typeorm/entities/ingredient";
 import { IUpdateProduct } from "../../dto/IUpdateProduct";
+
 import { IProductsRepository } from "../../infra/IProductsRepository";
 import { Product } from "../../infra/typeorm/entities/products";
 
@@ -35,6 +36,7 @@ class UpdateProductUseCase {
       );
     }
     return this.productsRepository.update(id, name, ingredientsList);
+
   }
 }
 export { UpdateProductUseCase };

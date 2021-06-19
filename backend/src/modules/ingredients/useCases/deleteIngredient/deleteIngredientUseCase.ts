@@ -14,6 +14,7 @@ class DeleteIngredientUseCase {
       throw new AppError("this ingredient doesnt belog to you", 403);
     });
     await this.ingredientRepository.delete(id);
+
   }
 }
 

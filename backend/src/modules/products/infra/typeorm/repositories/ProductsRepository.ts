@@ -20,6 +20,7 @@ export class ProductsRepository implements IProductsRepository {
     });
   }
 
+
   list(id: string): Promise<Product[]> {
     return this.productsRepository.find({
       where: {
@@ -38,6 +39,7 @@ export class ProductsRepository implements IProductsRepository {
       relations: ["ingredients"],
     });
     if (ingredients[0]) {
+
       await this.productsRepository
         .createQueryBuilder()
         .relation("ingredients")
@@ -53,6 +55,7 @@ export class ProductsRepository implements IProductsRepository {
   async findById(id: string): Promise<Product> {
     return this.productsRepository.findOneOrFail(id, {
       relations: ["ingredients"],
+
     });
   }
 

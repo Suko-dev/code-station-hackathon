@@ -3,6 +3,7 @@ import { container } from "tsyringe";
 
 import { ListProductsUseCase } from "./listProductsUseCase";
 
+
 class ListProductsController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;

@@ -15,6 +15,7 @@ class IngredientRepositoryInMemory implements IIngredientsRepository {
 
   async delete(id: string): Promise<void> {
     const index = this.repository.findIndex((item) => item.id === id);
+
     this.repository.splice(index, 1);
   }
 
