@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryColumn,
@@ -9,30 +10,28 @@ import {
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
-import { Product } from "../../../../products/infra/typeorm/entities/products";
+import { Ingredient } from "../../../../ingredients/infra/typeorm/entities/ingredient";
 import { User } from "../../../../users/infra/typeorm/entities/user";
 
-@Entity("ingredients")
-class Ingredient {
+@Entity()
+class Product {
   @PrimaryColumn()
   id: string;
 
   @Column()
   name: string;
 
-  @Column()
-  unit_type: string;
+  @ManyToOne(() => User, (user) => user.products, { cascade: true })
+  user: User;
 
-  @Column({ type: "decimal" })
-  unit_price: number;
-
-  @ManyToMany(() => Product, (product) => product.ingredients)
-  products: Product[];
-
-  @ManyToOne(() => User, (user) => user.ingredients, {
+  @ManyToMany(() => Ingredient, (ingredient) => ingredient.products, {
     cascade: true,
   })
-  user: User;
+  @JoinTable()
+  ingredients: Ingredient[];
+
+  @Column({ type: "decimal" })
+  total_price: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -47,4 +46,4 @@ class Ingredient {
   }
 }
 
-export { Ingredient };
+export { Product };

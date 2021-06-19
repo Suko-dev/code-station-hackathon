@@ -9,6 +9,7 @@ import {
 import { v4 as uuid } from "uuid";
 
 import { Ingredient } from "../../../../ingredients/infra/typeorm/entities/ingredient";
+import { Product } from "../../../../products/infra/typeorm/entities/products";
 
 @Entity("users")
 class User {
@@ -31,7 +32,10 @@ class User {
   profit: number;
 
   @OneToMany(() => Ingredient, (ingredient) => ingredient.user)
-  ingredient: Ingredient[];
+  ingredients: Ingredient[];
+
+  @OneToMany(() => Product, (product) => product.user)
+  products: Product[];
 
   @CreateDateColumn()
   created_at: Date;

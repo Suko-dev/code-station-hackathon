@@ -41,7 +41,8 @@ class IngredientsRepository implements IIngredientsRepository {
   }
 
   async findByName(name: string): Promise<Ingredient | undefined> {
-    return this.ingredientRepository.findOne(name);
+    const ingredient = await this.ingredientRepository.findOne({ name });
+    return ingredient;
   }
 
   async update(
@@ -59,7 +60,6 @@ class IngredientsRepository implements IIngredientsRepository {
     return this.ingredientRepository.findOneOrFail({
       where: { id },
     });
-
   }
 }
 
