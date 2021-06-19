@@ -15,6 +15,7 @@ const authUserController = new AuthUserController();
 
 usersRoutes.post("/", catchAsync(createUserController.handle));
 usersRoutes.post("/login", catchAsync(authUserController.handle));
-usersRoutes.use(Auth);
+usersRoutes.use(catchAsync(Auth));
+
 usersRoutes.patch("/", catchAsync(updateUserController.handle));
 usersRoutes.delete("/", catchAsync(deleteUserController.handle));

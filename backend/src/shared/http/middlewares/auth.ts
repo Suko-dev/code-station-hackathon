@@ -27,13 +27,13 @@ export async function Auth(
     const user = await usersRepository.findById(String(sub));
 
     if (!user) {
-      throw new Error("user not found");
+      throw new AppError("no user was found with this token");
     }
 
     request.user = { id: String(sub) };
 
     next();
   } catch (error) {
-    throw new Error(error);
+    throw new AppError("invalid token");
   }
 }

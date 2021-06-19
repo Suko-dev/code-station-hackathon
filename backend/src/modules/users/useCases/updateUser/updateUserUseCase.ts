@@ -5,7 +5,7 @@ import { IUsersRepository } from "../../infra/IUsersRepository";
 import { User } from "../../infra/typeorm/entities/user";
 
 @injectable()
-class UpdateUserUseCase {
+export class UpdateUserUseCase {
   constructor(
     @inject("UsersRepository")
     private userRepository: IUsersRepository
@@ -14,5 +14,3 @@ class UpdateUserUseCase {
     return this.userRepository.update({ id, name, image, profit });
   }
 }
-
-export { UpdateUserUseCase };

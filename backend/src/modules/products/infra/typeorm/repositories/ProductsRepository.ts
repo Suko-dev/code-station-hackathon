@@ -10,6 +10,17 @@ export class ProductsRepository implements IProductsRepository {
   constructor() {
     this.productsRepository = getRepository(Product);
   }
+  async delete(id: string): Promise<void> {
+    this.productsRepository.delete(id);
+  }
+
+  async verifyOwner(id: string, userId: string): Promise<void> {
+    await this.productsRepository.findOneOrFail({
+      where: { id, user: { id: userId } },
+    });
+  }
+
+
   list(id: string): Promise<Product[]> {
     return this.productsRepository.find({
       where: {
@@ -25,9 +36,10 @@ export class ProductsRepository implements IProductsRepository {
     ingredients: Ingredient[]
   ): Promise<Product> {
     const oldProduct = await this.productsRepository.findOneOrFail(id, {
-      relations: ["user", "ingredients"],
+      relations: ["ingredients"],
     });
-    if (ingredients) {
+    if (ingredients[0]) {
+
       await this.productsRepository
         .createQueryBuilder()
         .relation("ingredients")
@@ -42,7 +54,8 @@ export class ProductsRepository implements IProductsRepository {
 
   async findById(id: string): Promise<Product> {
     return this.productsRepository.findOneOrFail(id, {
-      relations: ["user", "ingredients"],
+      relations: ["ingredients"],
+
     });
   }
 

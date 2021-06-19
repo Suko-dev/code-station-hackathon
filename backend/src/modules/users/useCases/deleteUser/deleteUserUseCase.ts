@@ -3,7 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IUsersRepository } from "../../infra/IUsersRepository";
 
 @injectable()
-class DeleteUserUseCase {
+export class DeleteUserUseCase {
   constructor(
     @inject("UsersRepository")
     private userRepository: IUsersRepository
@@ -12,5 +12,3 @@ class DeleteUserUseCase {
     this.userRepository.delete(id);
   }
 }
-
-export { DeleteUserUseCase };
