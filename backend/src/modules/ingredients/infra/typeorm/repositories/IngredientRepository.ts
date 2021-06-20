@@ -20,7 +20,6 @@ class IngredientsRepository implements IIngredientsRepository {
 
   async delete(id: string): Promise<void> {
     await this.ingredientRepository.delete({ id });
-
   }
 
   async list(id: string): Promise<Ingredient[]> {

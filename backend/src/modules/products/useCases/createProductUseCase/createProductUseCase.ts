@@ -32,7 +32,16 @@ class CreateProductUseCase {
         )) as Ingredient;
       })
     );
-    return this.productsRepository.create(user, name, ingredientsList);
+    let price = ingredientsList.reduce((value, item, index) => {
+      return item.unit_price * ingredients[index].quantity;
+    }, 0);
+    price *= parseFloat("1") + parseFloat(String(user.profit));
+    return this.productsRepository.create(
+      user,
+      name,
+      ingredientsList,
+      Number(price.toFixed(2))
+    );
   }
 }
 export { CreateProductUseCase };

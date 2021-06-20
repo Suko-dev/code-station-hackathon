@@ -7,7 +7,7 @@ import dbServer from "./shared/typeorm";
 
 import "./shared/container";
 
-dbServer();
+dbServer("localhost");
 
 const app = express();
 

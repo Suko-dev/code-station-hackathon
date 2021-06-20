@@ -9,7 +9,6 @@ describe("List Product", () => {
   beforeEach(() => {
     productRepositoryInMemory = new ProductRepositoryInMemory();
     listProductUseCase = new ListProductsUseCase(productRepositoryInMemory);
-
   });
   it("should be able to list a Product", async () => {
     const product = await listProductUseCase.execute("1");

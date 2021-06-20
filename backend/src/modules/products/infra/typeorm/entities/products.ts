@@ -24,9 +24,7 @@ class Product {
   @ManyToOne(() => User, (user) => user.products, { cascade: true })
   user: User;
 
-  @ManyToMany(() => Ingredient, (ingredient) => ingredient.products, {
-    cascade: true,
-  })
+  @ManyToMany(() => Ingredient, (ingredient) => ingredient.products)
   @JoinTable()
   ingredients: Ingredient[];
 

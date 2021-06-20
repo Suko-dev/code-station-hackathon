@@ -7,6 +7,7 @@ interface IReturnUserDTO {
     id: string;
   };
   token: string;
+  refresh_token: string;
 }
 
 export { IReturnUserDTO };

@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-import { UsersRepository } from "../../../modules/users/infra/typeorm/repositories/usersRepository";
+import auth from "../../../config/auth";
+import { UserTokensRepository } from "../../../modules/users/infra/typeorm/repositories/tokenRepository";
 import { AppError } from "../../errors/AppError";
 
 export async function Auth(
@@ -18,9 +19,9 @@ export async function Auth(
   const [, token] = authHeader.split(" ");
 
   try {
-    const { sub } = verify(token, "a3740377e4ff48fcf933e22e32c57c60");
-    const usersRepository = new UsersRepository();
-    const user = await usersRepository.findById(String(sub));
+    const { sub } = verify(token, auth.refresh_token_secret);
+    const repository = new UserTokensRepository();
+    const user = await repository.findByUserId(String(sub), token);
     if (!user) {
       throw new AppError("no user was found with this token");
     }
