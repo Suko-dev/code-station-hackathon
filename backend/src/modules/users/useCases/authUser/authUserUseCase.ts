@@ -18,7 +18,8 @@ class AuthUserUseCase {
     @inject("UserTokensRepository")
     private tokenRepository: ITokenRepository
   ) {}
-  async execute({ email, password }: ICreateUserDTO): Promise<IReturnUserDTO> {
+  async execute(data: ICreateUserDTO): Promise<IReturnUserDTO> {
+    const { email } = data;
     const {
       refresh_token_expiration,
       refresh_token_secret,
@@ -29,7 +30,7 @@ class AuthUserUseCase {
     if (!user) {
       throw new AppError("email or password incorret", 403);
     }
-    const correctPassword = await compare(password, user.password);
+    const correctPassword = await compare(data.password, user.password);
 
     if (!correctPassword) {
       throw new AppError("email or password incorret", 403);
@@ -49,7 +50,9 @@ class AuthUserUseCase {
       expire_date: addDays(Number(expire)),
       userId: user.id,
     });
-    return { user, token, refresh_token };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...returnUser } = user;
+    return { user: returnUser, token, refresh_token };
   }
 }
 

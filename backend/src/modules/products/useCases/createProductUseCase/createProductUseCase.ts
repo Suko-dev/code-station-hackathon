@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../shared/errors/AppError";
 import { IIngredientsRepository } from "../../../ingredients/infra/IIngredientsRepository";
 import { Ingredient } from "../../../ingredients/infra/typeorm/entities/ingredient";
 import { IUsersRepository } from "../../../users/infra/IUsersRepository";
@@ -8,6 +9,10 @@ import { IProductIngredients } from "../../dto/IProductIngredients";
 import { IProductsRepository } from "../../infra/IProductsRepository";
 import { Product } from "../../infra/typeorm/entities/products";
 
+interface IReturnProduct {
+  id: string;
+  name: string;
+}
 @injectable()
 class CreateProductUseCase {
   constructor(
@@ -22,26 +27,33 @@ class CreateProductUseCase {
   async execute(
     userId: string,
     { name, ingredients }: IProductIngredients
-  ): Promise<Product> {
+  ): Promise<IReturnProduct> {
     let ingredientsList: Ingredient[] = [];
-    const user = (await this.usersRepository.findById(userId)) as User;
+    const createUser = (await this.usersRepository.findById(userId)) as User;
     ingredientsList = await Promise.all(
       ingredients.map(async (item) => {
-        return (await this.ingredientsRepository.findByName(
+        const ingredient = (await this.ingredientsRepository.findByName(
           item.ingredient
         )) as Ingredient;
+        await this.ingredientsRepository
+          .verifyOwner(ingredient.id, userId)
+          .catch(() => {
+            throw new AppError("Ingredient not found");
+          });
+        return ingredient;
       })
     );
     let price = ingredientsList.reduce((value, item, index) => {
       return item.unit_price * ingredients[index].quantity;
     }, 0);
-    price *= parseFloat("1") + parseFloat(String(user.profit));
-    return this.productsRepository.create(
-      user,
+    price *= parseFloat("1") + parseFloat(String(createUser.profit));
+    const { user, ...product } = await this.productsRepository.create(
+      createUser,
       name,
       ingredientsList,
       Number(price.toFixed(2))
     );
+    return product;
   }
 }
 export { CreateProductUseCase };
