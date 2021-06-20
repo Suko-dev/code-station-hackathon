@@ -18,7 +18,8 @@ class CreateUserUseCase {
     @inject("UserTokensRepository")
     private tokenRepository: ITokenRepository
   ) {}
-  async execute({ email, password }: ICreateUserDTO): Promise<IReturnUserDTO> {
+  async execute(data: ICreateUserDTO): Promise<IReturnUserDTO> {
+    const { email } = data;
     const verifyEmail = await this.userRepository.findByEmail(email);
     const {
       token_secret,
@@ -29,7 +30,7 @@ class CreateUserUseCase {
     if (verifyEmail) {
       throw new AppError("user already exists");
     }
-    const hashPassword = await hash(password, 8);
+    const hashPassword = await hash(data.password, 8);
 
     const user = await this.userRepository.create({
       email,
@@ -50,7 +51,9 @@ class CreateUserUseCase {
       expire_date: addDays(Number(expire)),
       userId: user.id,
     });
-    return { user, token, refresh_token };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...returnUser } = user;
+    return { user: returnUser, token, refresh_token };
   }
 }
 

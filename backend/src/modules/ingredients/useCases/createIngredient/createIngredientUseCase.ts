@@ -6,6 +6,10 @@ import { ICreateIngredientDTO } from "../../dto/ICreateIngredientDTO";
 import { IIngredientsRepository } from "../../infra/IIngredientsRepository";
 import { Ingredient } from "../../infra/typeorm/entities/ingredient";
 
+interface IReturnIngredient {
+  id: string;
+  name: string;
+}
 @injectable()
 class CreateIngredientUseCase {
   constructor(
@@ -17,13 +21,17 @@ class CreateIngredientUseCase {
   async execute(
     userId: string,
     { name, unit_price, unit_type }: ICreateIngredientDTO
-  ): Promise<Ingredient> {
-    const user = (await this.usersRepository.findById(userId)) as User;
-    return this.ingredientRepository.create(user, {
-      name,
-      unit_type,
-      unit_price,
-    });
+  ): Promise<IReturnIngredient> {
+    const createUser = (await this.usersRepository.findById(userId)) as User;
+    const { user, ...ingredient } = await this.ingredientRepository.create(
+      createUser,
+      {
+        name,
+        unit_type,
+        unit_price,
+      }
+    );
+    return ingredient;
   }
 }
 
